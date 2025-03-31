@@ -31,7 +31,6 @@ const convertPayloadAccountToAdapterAccount = (account: Account): AdapterAccount
 export function PayloadAuthAdapter(): Adapter {
   return {
     createUser: async ({ id, ...data }) => {
-      console.log('==>createUser', { id, ...data })
       const payload = await createPayloadClient()
       const user = await payload.create({
         collection: 'users',
@@ -40,15 +39,12 @@ export function PayloadAuthAdapter(): Adapter {
           name: data.name,
           emailVerified: data.emailVerified ? data.emailVerified.toISOString() : null,
           image: data.image,
-          password: 'password',
         },
       })
       return covertPayloadUserToAdapterUser(user)
     },
 
     getUserByAccount: async (providerAccount) => {
-      console.log('==>getUserByAccount', providerAccount)
-
       const { provider, providerAccountId } = providerAccount
       const payload = await createPayloadClient()
       const accountResponse = await payload.find({
@@ -66,7 +62,6 @@ export function PayloadAuthAdapter(): Adapter {
     },
 
     updateUser: async ({ id, ...data }) => {
-      console.log('==>updateUser')
       const payload = await createPayloadClient()
       const updatedUser = await payload.update({
         collection: 'users',
@@ -80,17 +75,8 @@ export function PayloadAuthAdapter(): Adapter {
       })
       return covertPayloadUserToAdapterUser(updatedUser)
     },
-    deleteUser: async (id) => {
-      console.log('==>deleteUser')
-      const payload = await createPayloadClient()
-      const deletedUser = await payload.delete({
-        collection: 'users',
-        id: Number(id),
-      })
-      return covertPayloadUserToAdapterUser(deletedUser)
-    },
+
     linkAccount: async (account) => {
-      console.log('==>linkAccount', account)
       const payload = await createPayloadClient()
       const createdAccount = await payload.create({
         collection: 'accounts',
@@ -105,19 +91,8 @@ export function PayloadAuthAdapter(): Adapter {
       })
       return convertPayloadAccountToAdapterAccount(createdAccount)
     },
-    unlinkAccount: async (account) => {
-      console.log('unnlinkAccount', account)
-      const payload = await createPayloadClient()
-      const deletedAccount = await payload.delete({
-        collection: 'accounts',
-        where: {
-          providerAccountId: { equals: account.providerAccountId },
-          provider: { equals: account.provider },
-        },
-      })
-    },
+
     getUser: async (id) => {
-      console.log('==>getUser')
       const payload = await createPayloadClient()
       try {
         const user = await payload.findByID({
@@ -129,8 +104,8 @@ export function PayloadAuthAdapter(): Adapter {
         return null
       }
     },
+
     getUserByEmail: async (email) => {
-      console.log('==>getUserByEmail')
       const payload = await createPayloadClient()
       const userResponse = await payload.find({
         collection: 'users',
@@ -145,7 +120,6 @@ export function PayloadAuthAdapter(): Adapter {
     },
 
     getAccount: async (providerAccountId, provider) => {
-      console.log('==>getAccount', providerAccountId, provider)
       const payload = await createPayloadClient()
       const accountResponse = await payload.find({
         collection: 'accounts',

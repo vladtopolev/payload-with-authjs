@@ -128,6 +128,7 @@ export interface User {
   name?: string | null;
   image?: string | null;
   emailVerified?: string | null;
+  password?: string | null;
   accounts?: {
     docs?: (number | Account)[];
     hasNextPage?: boolean;
@@ -142,7 +143,6 @@ export interface User {
   hash?: string | null;
   loginAttempts?: number | null;
   lockUntil?: string | null;
-  password?: string | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -247,6 +247,7 @@ export interface UsersSelect<T extends boolean = true> {
   name?: T;
   image?: T;
   emailVerified?: T;
+  password?: T;
   accounts?: T;
   updatedAt?: T;
   createdAt?: T;

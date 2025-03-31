@@ -20,6 +20,14 @@ const payloadConfig = buildConfig({
     importMap: {
       baseDir: path.resolve(dirname),
     },
+    components: {
+      views: {
+        login: {
+          Component: '@/(admin)/views/Login',
+          path: '/signin',
+        },
+      },
+    },
   },
   collections: [Users, Accounts, Media],
   editor: lexicalEditor(),
