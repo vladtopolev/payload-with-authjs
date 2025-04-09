@@ -6,6 +6,15 @@ export const Users: CollectionConfig = {
   admin: {
     useAsTitle: 'email',
   },
+  access: {
+    admin: ({ req: { user } }) => {
+      // only superadmins and admins
+      if (user && user.role === 'admin') {
+        return true
+      }
+      return false
+    },
+  },
   auth: {
     disableLocalStrategy: true,
     strategies: [
@@ -46,6 +55,21 @@ export const Users: CollectionConfig = {
     { name: 'image', type: 'text' },
     { name: 'emailVerified', type: 'date' },
     { name: 'password', type: 'text', hidden: true },
+    {
+      name: 'role',
+      type: 'select',
+      options: [
+        {
+          label: 'User',
+          value: 'user',
+        },
+        {
+          label: 'Admin',
+          value: 'admin',
+        },
+      ],
+      defaultValue: 'user',
+    },
     {
       name: 'accounts',
       type: 'join',

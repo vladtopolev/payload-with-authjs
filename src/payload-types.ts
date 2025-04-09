@@ -125,10 +125,12 @@ export interface UserAuthOperations {
  */
 export interface User {
   id: number;
+  email: string;
   name?: string | null;
   image?: string | null;
   emailVerified?: string | null;
   password?: string | null;
+  role?: ('user' | 'admin') | null;
   accounts?: {
     docs?: (number | Account)[];
     hasNextPage?: boolean;
@@ -136,13 +138,6 @@ export interface User {
   };
   updatedAt: string;
   createdAt: string;
-  email: string;
-  resetPasswordToken?: string | null;
-  resetPasswordExpiration?: string | null;
-  salt?: string | null;
-  hash?: string | null;
-  loginAttempts?: number | null;
-  lockUntil?: string | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -244,20 +239,15 @@ export interface PayloadMigration {
  * via the `definition` "users_select".
  */
 export interface UsersSelect<T extends boolean = true> {
+  email?: T;
   name?: T;
   image?: T;
   emailVerified?: T;
   password?: T;
+  role?: T;
   accounts?: T;
   updatedAt?: T;
   createdAt?: T;
-  email?: T;
-  resetPasswordToken?: T;
-  resetPasswordExpiration?: T;
-  salt?: T;
-  hash?: T;
-  loginAttempts?: T;
-  lockUntil?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
